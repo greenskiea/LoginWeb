@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Battle.net Login</title>
+    <style>
+        body {
+            background-color: #15171e;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #15171e;
+            border-radius: 5px;
+        }
+
+        .logo {
+            width: 240px;
+            height: 120px;
+            display: block;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .Login {
+            text-align: center;
+            display: flex;
+            align-items: center;    
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .Login::before{
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background-color: #434449;
+            margin-right: 10px;
+        }
+
+        .Login::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background-color: #434449;
+            margin-left: 10px;
+        }
+
+
+        .LoginText {
+            color: #a1a2a5;
+        }
+
+        input[type="text"] {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid;
+            border-color: #77787e;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            background-color: #171920;
+            font-size: large;
+        }
+
+        input[type="password"] {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid;
+            border-color: #77787e;
+            border-radius: 5px;
+            margin-bottom: 50px;
+            background-color: #171920;
+            font-size: large;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            height: 45px;
+            padding: 10px;
+            background-color: #0074e0;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: larger;
+            font-weight: bold;
+            margin-bottom: 50px;
+        }
+
+        h3 {
+            text-align: center;
+            color: #148ef5;
+            font-weight: bolder;
+        }
+
+        .square {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            border-radius: 5px;
+            background-size: 40%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .GroupSquare {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .google {
+            background-color: white;
+            background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png");
+        }
+
+        .facebook {
+            background-color: #1877f2;
+            background-image: url("https://bnetaccount.akamaized.net/login/static/images/login/social/facebook-logo-white.svg");
+        }
+
+        .apple {
+            background-color: white;
+            background-image: url("https://bnetaccount.akamaized.net/login/static/images/login/social/apple-logo-black.svg");
+        }
+
+        .xbox {
+            background-color: #107c10;
+            background-image: url("https://bnetaccount.akamaized.net/login/static/images/login/social/xbox-logo-white.svg");
+        }
+
+        .playstation {
+            background-color: #0070cc;
+            background-image: url("https://bnetaccount.akamaized.net/login/static/images/login/social/playstation-logo-white.svg");
+        }
+
+        .nitendo {
+            background-color: #e60012;
+            background-image: url("https://bnetaccount.akamaized.net/login/static/images/login/social/switch-logo-white.svg");
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="https://bnetaccount.akamaized.net/login/static/images/toolkit/defaults/logos/bnet/logo-horizontal-color-light.1z1fI.svg"
+            class="logo">
+        <h1>
+            Log In
+        </h1>
+        <div class="GroupSquare">
+            <button class="square google"></button>
+            <button class="square facebook"></button>
+            <button class="square apple"></button>
+            <button class="square xbox"></button>
+            <button class="square playstation"></button>
+            <button class="square nitendo"></button>
+        </div>
+        <div class="Login">
+            <p class="LoginText"><b>Or log in with</b></p>
+        </div>
+        <input type="text" id="username" name="username" placeholder="Email or Phone">
+        <input type="password" id="password" name="password" placeholder="Password">
+        <input type="submit" value="Log In">
+        <h3>
+            Create a free Battle.net Account
+        </h3>
+        <h3>
+            Can't Log in?
+        </h3>
+    </div>
+</body>
+
+</html>
