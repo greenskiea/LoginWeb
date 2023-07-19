@@ -21,6 +21,7 @@ h1 {
   text-align: center;
   color: white;
   margin-bottom: 40px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .Login {
@@ -49,13 +50,14 @@ h1 {
 
 .LoginText {
   color: #a1a2a5;
+  font-family: 'Roboto', sans-serif;
 }
 
 input[type="text"] {
   width: 95%;
   padding: 10px;
-  border: 1px solid;
-  border-color: #77787e;
+  border: 0.1px solid;
+  border-color: rgb(169, 169, 172);
   border-radius: 5px;
   margin-bottom: 25px;
   background-color: #171920;
@@ -67,12 +69,18 @@ input[type="password"] {
   width: 95%;
   padding: 10px;
   border: 1px solid;
-  border-color: #77787e;
+  border-color: rgb(169, 169, 172);
   border-radius: 5px;
   margin-bottom: 50px;
   background-color: #171920;
   font-size: large;
   color: white;
+}
+
+input::placeholder {
+  font-size: 90%;
+  opacity: 0.5;
+  color: #EBE5E5;
 }
 
 input[type="submit"] {
@@ -92,6 +100,7 @@ h3 {
   text-align: center;
   color: #148ef5;
   font-weight: bolder;
+  font-family: 'Roboto', sans-serif;
 }
 
 .square {
