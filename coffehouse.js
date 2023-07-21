@@ -234,11 +234,23 @@ container.appendChild(NewDiaChi_SDT);
 container.appendChild(NewNavBar);
 container.appendChild(ContainerCard);
 
-function addCart() {
-  console.log("item:");
+/**
+ * @param {number} index
+ */
+function addCart(index) {
+  let food = new Tea(
+    data.foods[index].id,
+    data.foods[index].quantity,
+    data.foods[index].name,
+    data.foods[index].price,
+    data.foods[index].image
+  );
+  console.log("item: ", food);
 }
 
-document.querySelectorAll(".btnAdd").forEach((item) => {
+document.querySelectorAll(".btnAdd").forEach((item, index) => {
   console.log(item);
-  item.addEventListener("click", addCart);
+  item.addEventListener("click", () => {
+    addCart(index);
+  });
 });
