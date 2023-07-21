@@ -1,3 +1,4 @@
+import data from "./data.json" assert { type: "json" };
 let container = document.getElementById("container");
 let body = document.body;
 
@@ -144,14 +145,15 @@ function BuildItemCard(name, price, image) {
         "font-size": "16px",
         "margin": "0px 5px 10px",
     });
-
+    
     ItemCard.innerHTML = `<img src="${image}" style="width: 100%; border-radius: 10px; height: 280px; object-fit: cover; box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.2), 0 -2px 20px 0 rgba(0, 0, 0, 0.19);">
     <div style="margin-top: 5px;">
     <h4 style="margin-bottom: 4px;">${name}</h4>
-    <p style="margin-top: 5px">${price}</p>
+    <p style="margin-top: 5px">${price} đ</p>
     </div>`
     return ItemCard;
 }
+
 
 let NewDiaChi_SDT = DiaChi_SDT();
 let NewNavBar = NavBar();
@@ -167,55 +169,83 @@ listCard.style.justifyContent = "center";
 let ContainerCard = document.createElement("div");
     ContainerCard.style.padding = "0px 170px 0px 170px";
 
-let NewCardTraDao = BuildItemCard(
-    "Trà Vị Đào Tearoma 14x14g",
-    "32.000 đ",
-    "https://product.hstatic.net/1000075078/product/1669706771_bg-tradao-min_023afa26f3e943199fc468cc916ef936_large.jpg"
-)
-let NewCardTraSua = BuildItemCard(
-    "Trà Sữa Trân Châu Tearoma 250g",
-    "38.000 đ",
-    "https://product.hstatic.net/1000075078/product/1669880647_bg-trasua-min_5f01ce93b1684d4e86010988be8559f4_large.jpg"
-)
-let NewCardTraMatOng = BuildItemCard(
-    "Trà Vị Tắc Mật Ong Tearoma 14x14g",
-    "32.000 đ",
-    "https://product.hstatic.net/1000075078/product/1669706748_bg-tratatmatong-min_cbb8a839f404459d8efba52f566d79c9_large.jpg"
-)
-let NewCardTraOolong = BuildItemCard(
-    "Trà Oolong Túi Lọc Tearoma 20x2G",
-    "28.000 đ",
-    "https://product.hstatic.net/1000075078/product/1639646968_tra-oolong-tui-loc-tearoma-20x2gr_d835290c7eed46cd860764777adc55d5_large.jpg"
-)
-let NewCardTraLai = BuildItemCard(
-    "Trà Lài Túi Lọc Tearoma 20x2G",
-    "28.000 đ",
-    "https://product.hstatic.net/1000075078/product/1639647075_tra-lai-tui-loc-tearoma-20x2gr_4bdef73c8abd44ef893f167088c99a8f_large.jpg"
-)
-let NewCardTraSen = BuildItemCard(
-    "Trà Sen Túi Lọc Tearoma 20x2G",
-    "28.000 đ",
-    "https://product.hstatic.net/1000075078/product/1639648068_tra-sen-tui-loc-tearoma-20x2gr_af088d6bf1934ef482a1da313a798ea0_large.jpg"
-)
-let NewCardTuiLocDao = BuildItemCard(
-    "Trà Đào Túi Lọc Tearoma 20x2G",
-    "28.000 đ",
-    "https://product.hstatic.net/1000075078/product/1639646846_tra-dao-tui-loc-tearoma-20x2gr_0a91c5a70f4345218d731ef5328bc120_large.jpg"
-)
-let NewCardGiftSet = BuildItemCard(
-    "Giftset Trà Tearoma",
-    "166.000 đ",
-    "https://product.hstatic.net/1000075078/product/1641440575_gift-set-tearoma-1_81a5aff3a4814cb786c61cbeeccfd71f_large.jpeg"
-)
+// let NewCardTraDao = BuildItemCard(
+//     "Trà Vị Đào Tearoma 14x14g",
+//     32.000,
+//     "https://product.hstatic.net/1000075078/product/1669706771_bg-tradao-min_023afa26f3e943199fc468cc916ef936_large.jpg"
+// )
+// let NewCardTraSua = BuildItemCard(
+//     "Trà Sữa Trân Châu Tearoma 250g",
+//     "38.000",
+//     "https://product.hstatic.net/1000075078/product/1669880647_bg-trasua-min_5f01ce93b1684d4e86010988be8559f4_large.jpg"
+// )
+// let NewCardTraMatOng = BuildItemCard(
+//     "Trà Vị Tắc Mật Ong Tearoma 14x14g",
+//     "32.000",
+//     "https://product.hstatic.net/1000075078/product/1669706748_bg-tratatmatong-min_cbb8a839f404459d8efba52f566d79c9_large.jpg"
+// )
+// let NewCardTraOolong = BuildItemCard(
+//     "Trà Oolong Túi Lọc Tearoma 20x2G",
+//     "28.000",
+//     "https://product.hstatic.net/1000075078/product/1639646968_tra-oolong-tui-loc-tearoma-20x2gr_d835290c7eed46cd860764777adc55d5_large.jpg"
+// )
+// let NewCardTraLai = BuildItemCard(
+//     "Trà Lài Túi Lọc Tearoma 20x2G",
+//     "28.000",
+//     "https://product.hstatic.net/1000075078/product/1639647075_tra-lai-tui-loc-tearoma-20x2gr_4bdef73c8abd44ef893f167088c99a8f_large.jpg"
+// )
+// let NewCardTraSen = BuildItemCard(
+//     "Trà Sen Túi Lọc Tearoma 20x2G",
+//     "28.000",
+//     "https://product.hstatic.net/1000075078/product/1639648068_tra-sen-tui-loc-tearoma-20x2gr_af088d6bf1934ef482a1da313a798ea0_large.jpg"
+// )
+// let NewCardTuiLocDao = BuildItemCard(
+//     "Trà Đào Túi Lọc Tearoma 20x2G",
+//     "28.000",
+//     "https://product.hstatic.net/1000075078/product/1639646846_tra-dao-tui-loc-tearoma-20x2gr_0a91c5a70f4345218d731ef5328bc120_large.jpg"
+// )
+// let NewCardGiftSet = BuildItemCard(
+//     "Giftset Trà Tearoma",
+//     "166.000",
+//     "https://product.hstatic.net/1000075078/product/1641440575_gift-set-tearoma-1_81a5aff3a4814cb786c61cbeeccfd71f_large.jpeg"
+// )
 
-listCard.appendChild(NewCardTraDao);
-listCard.appendChild(NewCardTraSua);
-listCard.appendChild(NewCardTraMatOng);
-listCard.appendChild(NewCardTraOolong);
-listCard.appendChild(NewCardTraLai);
-listCard.appendChild(NewCardTraSen);
-listCard.appendChild(NewCardTuiLocDao);
-listCard.appendChild(NewCardGiftSet);
+class tea {
+    /**
+     * @param {String} name
+     * @param {Number} price
+     * @param {String} image
+     */
+
+    constructor(name,price,image){
+        this.name = name;
+        this.price = price;
+        this.image = image;
+    }
+}
+
+
+
+
+// listCard.appendChild(NewCardTraDao);
+// listCard.appendChild(NewCardTraSua);
+// listCard.appendChild(NewCardTraMatOng);
+// listCard.appendChild(NewCardTraOolong);
+// listCard.appendChild(NewCardTraLai);
+// listCard.appendChild(NewCardTraSen);
+// listCard.appendChild(NewCardTuiLocDao);
+// listCard.appendChild(NewCardGiftSet);
+
+for(let i=0; i<data.foods.length; i++)
+{
+    let item = data.foods[i]
+    let newItem = BuildItemCard(item.name,item.price,item.image);
+    listCard.appendChild(newItem);
+}
+
+
+
+
 ContainerCard.appendChild(NewMenuItem);
 ContainerCard.appendChild(listCard);
 
