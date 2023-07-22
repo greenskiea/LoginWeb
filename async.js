@@ -1,3 +1,8 @@
+const readline = require("readline");
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 function wait(second) {
   let waitPromise = new Promise((resolver, rejector) => {
     setTimeout(() => {
@@ -11,12 +16,27 @@ async function askForDinner() {
   console.log("Hỏi mẹ ăn gì");
   await wait(1);
   console.log("Ăn cơm với thịt và canh chua");
+  return 200; //Expect money
 }
 
-async function getMoney() {
-  console.log("Lấy tiền mẹ thôi!!!!");
-  await wait(0.5);
-  console.log("Có tiền rồi!!!!! Đi chợ thôi");
+async function getMoney(moneyExpect) {
+  let moneyGet;
+  return new Promise(async (resolve, reject) => {
+    console.log("Lấy tiền mẹ thôi!!!!");
+    await new Promise((resolve, reject) => {
+      rl.on("line", (input) => {
+        moneyGet = parseInt(input);
+        resolve();
+        rl.close();
+      });
+    });
+
+    if (moneyGet >= moneyExpect) {
+      resolve("Ok đủ tiền đi chợ");
+    } else {
+      reject("Mẹ cho hỏng đủ tiền");
+    }
+  });
 }
 async function goToMarket() {
   console.log("Bắt đầu đi chợ");
@@ -28,12 +48,15 @@ async function goToMarket() {
 
 async function cook() {
   async function soChe() {
-    console.log("Sơ chế nguyên liệu\n==================");
-    console.log("\n1.Lặt rau");
-    console.log("\n2.Thái thịt");
-    console.log("Vo gạo");
-    await wait(5);
-    console.log("sơ chế hoàn thành");
+    return new Promise(async (res, rej) => {
+      console.log("Sơ chế nguyên liệu\n==================");
+      console.log("\n1.Lặt rau");
+      console.log("2.Thái thịt");
+      console.log("3.Vo gạo");
+      await wait(5);
+      console.log("sơ chế hoàn thành");
+      res();
+    });
   }
   async function nauCom() {
     return new Promise(async (resolve, reject) => {
@@ -61,12 +84,7 @@ async function cook() {
     });
   }
   await soChe();
-  let process = new Promise(async (resolver, rejector) => {
-    nauCom();
-    nauCanh();
-    nauDoAn();
-  });
-  return process;
+  await Promise.all([nauCom(), nauCanh(), nauDoAn()]);
 }
 async function donCom() {
   await wait(2);
@@ -78,13 +96,19 @@ async function quat() {
   console.log("Quất!!!!!!!!!!!!!!!!!!!!!");
 }
 let main = async function () {
-  await askForDinner();
-  await getMoney();
-  await goToMarket();
-  await cook().then(async () => {
-    await donCom();
-    await quat();
-  });
+  let expectMoney = await askForDinner();
+  await getMoney(expectMoney)
+    .then(async (value) => {
+      console.log(value);
+      await goToMarket();
+      await cook();
+      await donCom();
+      await quat();
+    })
+    .catch((value) => {
+      console.log(value);
+      console.log("Thôi ở nhà nhịn đói");
+    });
 };
 
 main();

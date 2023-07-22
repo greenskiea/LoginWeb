@@ -178,8 +178,46 @@ function BuildItemCard(tea) {
     cursor: "pointer",
   });
   buttonAdd.textContent = "Add";
+  buttonAdd.onclick = function () {
+    addCarttoMarket(tea);
+  };
   ItemCard.appendChild(buttonAdd);
   return ItemCard;
+}
+
+let Marketcart = [];
+/**
+ *
+ * @param {Tea} tea
+ * @returns
+ */
+function addCarttoMarket(tea) {
+  let itemTea;
+  // console.log(tea);
+  if (Marketcart.length == 0) {
+    itemTea = {
+      id: tea.id,
+      quantity: 1,
+    };
+    Marketcart.push(itemTea);
+    console.log(Marketcart);
+  } else {
+    Marketcart.find((value, index) => {
+      if (value.id === tea.id) {
+        value.quantity++;
+        console.log(Marketcart);
+        return;
+      } else {
+        itemTea = {
+          id: tea.id,
+          quantity: 1,
+        };
+        Marketcart.push(itemTea);
+        console.log(Marketcart);
+        return;
+      }
+    });
+  }
 }
 
 let NewDiaChi_SDT = DiaChi_SDT();
@@ -234,22 +272,18 @@ container.appendChild(NewDiaChi_SDT);
 container.appendChild(NewNavBar);
 container.appendChild(ContainerCard);
 
+let gioHang = [];
+
 /**
- * @param {number} index
+ * @param {Tea} tea
  */
-function addCart(index) {
-  let food = new Tea(
-    data.foods[index].id,
-    data.foods[index].quantity,
-    data.foods[index].name,
-    data.foods[index].price,
-    data.foods[index].image
-  );
-  console.log("item: ", food);
+function addCart(tea) {
+  if (gioHang == 0) {
+    gioHang.pu;
+  }
 }
 
 document.querySelectorAll(".btnAdd").forEach((item, index) => {
-  console.log(item);
   item.addEventListener("click", () => {
     addCart(index);
   });
