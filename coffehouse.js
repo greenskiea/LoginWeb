@@ -46,28 +46,81 @@ function DiaChi_SDT() {
   let dialogCart = document.createElement("dialog");
   dialogCart.id = "fastfood";
   dialogCart.innerHTML = `
-      <form>
-      <p>
-        <label>
-          Favorite animal:
-          <select>
-            <option value="default">Choose…</option>
-            <option>Brine shrimp</option>
-            <option>Red panda</option>
-            <option>Spider monkey</option>
-          </select>
-        </label>
-      </p>
+      <form id="formDialog">
       <div>
         <button value="cancel" formmethod="dialog">Cancel</button>
         <button id="confirmBtn" value="default">Thanh toán</button>
       </div>
     </form>
   `;
+
+  const formDialog = dialogCart.querySelector("#formDialog");
+  // console.log(formDialog);
+  formDialog.style.height = "600px";
+  formDialog.style.width = "500px";
+
+  let baophuElementCard = document.createElement("div");
+  // baophuElementCard.style.height = "300px";
+  baophuElementCard.style.width = "100%";
+
+  console.log(Marketcart.length);
+
   const confirmBtn = dialogCart.querySelector("#confirmBtn");
 
   icon.addEventListener("click", () => {
     dialogCart.showModal();
+    for (let i = 0; i < Marketcart.length; i++) {
+      let itemCard = Marketcart[i];
+      console.log(itemCard);
+      let elementCard = document.createElement("div");
+      elementCard.style.height = "100px";
+      elementCard.style.width = "95%";
+      elementCard.style.display = "flex";
+      elementCard.style.justifyContent = "space-between";
+      elementCard.style.alignItems = "center";
+      elementCard.style.gap = "10px";
+      elementCard.style.margin = "10px";
+      // elementCard.style.backgroundColor = "grey";
+
+      let imageCart = document.createElement("img");
+      imageCart.style.height = "100px";
+      imageCart.style.width = "100px";
+      imageCart.src = `${itemCard.image}`;
+
+      let nameCart = document.createElement("p");
+      nameCart.textContent = itemCard.name;
+
+      let priceCart = document.createElement("p");
+      priceCart.textContent = itemCard.price;
+
+      let increase = document.createElement("button");
+      increase.textContent = "+";
+      increase.addEventListener("click", (event) => {
+        event.preventDefault();
+        let soLuong = Marketcart[i].quantity++;
+        quantityCart.innerText = soLuong + 1;
+        console.log(soLuong);
+      });
+      let quantityCart = document.createElement("p");
+      quantityCart.textContent = itemCard.quantity;
+      let decrease = document.createElement("button");
+      decrease.textContent = "-";
+      decrease.addEventListener("click", (event) => {
+        event.preventDefault();
+        let soLuong = Marketcart[i].quantity--;
+        quantityCart.innerText = soLuong - 1;
+        console.log(soLuong);
+      });
+
+      elementCard.appendChild(imageCart);
+      elementCard.appendChild(nameCart);
+      elementCard.appendChild(decrease);
+      elementCard.appendChild(quantityCart);
+      elementCard.appendChild(increase);
+      elementCard.appendChild(priceCart);
+      baophuElementCard.appendChild(elementCard);
+    }
+    formDialog.appendChild(baophuElementCard);
   });
 
   confirmBtn.addEventListener("click", (event) => {
@@ -106,6 +159,13 @@ function DiaChi_SDT() {
   return DiaChi_SDT;
 }
 
+function increaseQuantity(Quantity, itemCard) {
+  return Quantity++;
+}
+function decreaseQuantity(Quantity, itemCard) {
+  return Quantity--;
+}
+
 function thanhToan() {
   let total = 0;
   for (let i = 0; i < Marketcart.length; i++) {
@@ -116,7 +176,7 @@ function thanhToan() {
       total += data.foods[indexTea].price * Marketcart[i].quantity;
     }
   }
-  alert(total);
+  alert(`tổng giá tiền là ${total}.000đ`);
 }
 
 function NavBar() {
@@ -265,6 +325,8 @@ function addCartToMarket(tea) {
     itemTea = {
       id: tea.id,
       name: tea.name,
+      price: tea.price,
+      image: tea.image,
       quantity: 1,
     };
     Marketcart.push(itemTea);
@@ -282,6 +344,8 @@ function addCartToMarket(tea) {
       itemTea = {
         id: tea.id,
         name: tea.name,
+        price: tea.price,
+        image: tea.image,
         quantity: 1,
       };
       Marketcart.push(itemTea);
