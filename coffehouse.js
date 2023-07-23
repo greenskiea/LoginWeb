@@ -32,6 +32,48 @@ function DiaChi_SDT() {
   LogoDC.style.height = "22px";
   LogoDC.style.marginRight = "3px";
 
+  let icon = document.createElement("i");
+  icon.className = "fas fa-shopping-basket";
+  icon.style.fontSize = "24px";
+  icon.style.color = "black";
+  icon.style.height = "45px";
+  icon.style.width = "45px";
+  icon.style.display = "flex";
+  icon.style.justifyContent = "center";
+  icon.style.alignItems = "center";
+  icon.style.color = "orange";
+
+  let dialogCart = document.createElement("dialog");
+  dialogCart.id = "fastfood";
+  dialogCart.innerHTML = `
+      <form>
+      <p>
+        <label>
+          Favorite animal:
+          <select>
+            <option value="default">Choose…</option>
+            <option>Brine shrimp</option>
+            <option>Red panda</option>
+            <option>Spider monkey</option>
+          </select>
+        </label>
+      </p>
+      <div>
+        <button value="cancel" formmethod="dialog">Cancel</button>
+        <button id="confirmBtn" value="default">Thanh toán</button>
+      </div>
+    </form>
+  `;
+  const confirmBtn = dialogCart.querySelector("#confirmBtn");
+
+  icon.addEventListener("click", () => {
+    dialogCart.showModal();
+  });
+
+  confirmBtn.addEventListener("click", (event) => {
+    thanhToan();
+  });
+
   DiaChi.appendChild(LogoDC);
   DiaChi.appendChild(NoiDungDC);
 
@@ -56,8 +98,25 @@ function DiaChi_SDT() {
 
   CanhGiua.appendChild(DiaChi);
   CanhGiua.appendChild(SoDienThoai);
+  CanhGiua.appendChild(dialogCart);
+  CanhGiua.appendChild(icon);
+
   DiaChi_SDT.appendChild(CanhGiua);
+
   return DiaChi_SDT;
+}
+
+function thanhToan() {
+  let total = 0;
+  for (let i = 0; i < Marketcart.length; i++) {
+    let indexTea = data.foods.findIndex(
+      (value) => value.id == Marketcart[i].id
+    );
+    if (indexTea != -1) {
+      total += data.foods[indexTea].price * Marketcart[i].quantity;
+    }
+  }
+  alert(total);
 }
 
 function NavBar() {
@@ -163,9 +222,14 @@ function BuildItemCard(tea) {
     <p style="margin-top: 5px">Quantity: ${tea.quantity}</p>
     </div>`;
 
+  let divButton = document.createElement("div");
+  divButton.style.display = "flex";
+  divButton.style.justifyContent = "center";
+
   let buttonAdd = document.createElement("button");
   buttonAdd.className = "btnAdd";
   Object.assign(buttonAdd.style, {
+    width: "90%",
     backgroundColor: "green",
     border: "none",
     color: "white",
@@ -179,9 +243,11 @@ function BuildItemCard(tea) {
   });
   buttonAdd.textContent = "Add";
   buttonAdd.onclick = function () {
-    addCarttoMarket(tea);
+    addCartToMarket(tea);
   };
-  ItemCard.appendChild(buttonAdd);
+
+  divButton.appendChild(buttonAdd);
+  ItemCard.appendChild(divButton);
   return ItemCard;
 }
 
@@ -191,33 +257,39 @@ let Marketcart = [];
  * @param {Tea} tea
  * @returns
  */
-function addCarttoMarket(tea) {
+function addCartToMarket(tea) {
   let itemTea;
+  let indexTea = data.foods.findIndex((value) => value.id == tea.id);
   // console.log(tea);
   if (Marketcart.length == 0) {
     itemTea = {
       id: tea.id,
+      name: tea.name,
       quantity: 1,
     };
     Marketcart.push(itemTea);
-    console.log(Marketcart);
+    data.foods[indexTea].quantity--;
   } else {
-    Marketcart.find((value, index) => {
-      if (value.id === tea.id) {
-        value.quantity++;
-        console.log(Marketcart);
-        return;
+    let indexCard = Marketcart.findIndex((value) => value.id == tea.id);
+    if (indexCard != -1) {
+      if (data.foods[indexTea].quantity + 1 >= Marketcart[indexCard].quantity) {
+        Marketcart[indexCard].quantity++;
+        data.foods[indexTea].quantity--;
       } else {
-        itemTea = {
-          id: tea.id,
-          quantity: 1,
-        };
-        Marketcart.push(itemTea);
-        console.log(Marketcart);
-        return;
+        alert("hết hàng");
       }
-    });
+    } else {
+      itemTea = {
+        id: tea.id,
+        name: tea.name,
+        quantity: 1,
+      };
+      Marketcart.push(itemTea);
+      data.foods[indexTea].quantity--;
+    }
   }
+  console.log(Marketcart);
+  console.log(data.foods);
 }
 
 let NewDiaChi_SDT = DiaChi_SDT();
